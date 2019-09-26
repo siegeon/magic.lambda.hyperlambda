@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Thomas Hansen</Authors>
+    <Description>Hyperlambda parser and creator plugin for magic.lambda</Description>
+    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
+    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.hyperlambda</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\projects\personal\magic.lambda.hyperlambda\magic.lambda.hyperlambda\magic.lambda.hyperlambda.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="magic.node" Version="1.0.0" />
+    <PackageReference Include="magic.node.extensions" Version="1.0.0" />
+    <PackageReference Include="magic.signals.contracts" Version="1.0.1" />
+  </ItemGroup>
+</Project>
