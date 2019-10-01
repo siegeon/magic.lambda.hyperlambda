@@ -11,9 +11,17 @@ using magic.node.extensions.hyperlambda;
 
 namespace magic.lambda.hyperlambda
 {
+    /// <summary>
+    /// [lambda] slot, allowing you to transform a piece of Hyperlambda to a lambda hierarchy.
+    /// </summary>
     [Slot(Name = "lambda")]
     public class Lambda : ISlot
     {
+        /// <summary>
+        /// Implementation of your slot.
+        /// </summary>
+        /// <param name="signaler">Signaler that raised the signal.</param>
+        /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
             var parser = new Parser(input.Get<string>());
