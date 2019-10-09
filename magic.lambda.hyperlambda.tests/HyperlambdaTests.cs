@@ -163,7 +163,7 @@ namespace magic.lambda.hyperlambda.tests
         {
             var signaler = Common.GetSignaler();
             var node = new Node("", "foo\n   bar");
-            signaler.Signal("lambda", node);
+            signaler.Signal("hyper2lambda", node);
             Assert.Equal("foo", node.Children.First().Name);
             Assert.Equal("bar", node.Children.First().Children.First().Name);
             Assert.Null(node.Value);
@@ -176,7 +176,7 @@ namespace magic.lambda.hyperlambda.tests
             var node = new Node("");
             node.Add(new Node("foo"));
             node.Children.First().Add(new Node("bar"));
-            signaler.Signal("hyper", node);
+            signaler.Signal("lambda2hyper", node);
             Assert.Equal("foo\r\n   bar\r\n", node.Value);
         }
 
@@ -191,9 +191,9 @@ jo:dude
 ".Replace("\r", "").Replace("\n", "\r\n");
             var signaler = Common.GetSignaler();
             var node = new Node("", hl);
-            signaler.Signal("lambda", node);
+            signaler.Signal("hyper2lambda", node);
             Assert.Null(node.Value);
-            signaler.Signal("hyper", node);
+            signaler.Signal("lambda2hyper", node);
             Assert.Equal(hl, node.Value);
         }
 
@@ -209,9 +209,9 @@ jo:dude
 ".Replace("\r", "").Replace("\n", "\r\n");
             var signaler = Common.GetSignaler();
             var node = new Node("", hl);
-            signaler.Signal("lambda", node);
+            signaler.Signal("hyper2lambda", node);
             Assert.Null(node.Value);
-            signaler.Signal("hyper", node);
+            signaler.Signal("lambda2hyper", node);
             Assert.Equal(hl, node.Value);
         }
 
@@ -227,9 +227,9 @@ jo:dude
 ".Replace("\r", "").Replace("\n", "\r\n");
             var signaler = Common.GetSignaler();
             var node = new Node("", hl);
-            signaler.Signal("lambda", node);
+            signaler.Signal("hyper2lambda", node);
             Assert.Null(node.Value);
-            signaler.Signal("hyper", node);
+            signaler.Signal("lambda2hyper", node);
             Assert.Equal(hl, node.Value);
         }
 
@@ -247,9 +247,9 @@ jo:dude
 ".Replace("\r", "").Replace("\n", "\r\n");
             var signaler = Common.GetSignaler();
             var node = new Node("", hl);
-            signaler.Signal("lambda", node);
+            signaler.Signal("hyper2lambda", node);
             Assert.Null(node.Value);
-            signaler.Signal("hyper", node);
+            signaler.Signal("lambda2hyper", node);
             Assert.Equal(hl, node.Value);
         }
     }

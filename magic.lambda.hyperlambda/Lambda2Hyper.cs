@@ -15,8 +15,8 @@ namespace magic.lambda.hyperlambda
     /// <summary>
     /// [hyper] slot for creating Hyperlambda from a lambda hierarchy.
     /// </summary>
-    [Slot(Name = "hyper")]
-    public class Hyper : ISlot
+    [Slot(Name = "lambda2hyper")]
+    public class Lambda2Hyper : ISlot
     {
         /// <summary>
         /// Implementation of your slot.

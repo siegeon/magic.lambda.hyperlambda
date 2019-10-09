@@ -14,8 +14,8 @@ namespace magic.lambda.hyperlambda
     /// <summary>
     /// [lambda] slot, allowing you to transform a piece of Hyperlambda to a lambda hierarchy.
     /// </summary>
-    [Slot(Name = "lambda")]
-    public class Lambda : ISlot
+    [Slot(Name = "hyper2lambda")]
+    public class Hyper2Lambda : ISlot
     {
         /// <summary>
         /// Implementation of your slot.
@@ -24,7 +24,7 @@ namespace magic.lambda.hyperlambda
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            var parser = new Parser(input.Get<string>());
+            var parser = new Parser(input.GetEx<string>());
             input.AddRange(parser.Lambda().Children.ToList());
             input.Value = null;
         }
