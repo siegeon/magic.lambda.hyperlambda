@@ -181,6 +181,17 @@ namespace magic.lambda.hyperlambda.tests
         }
 
         [Fact]
+        public void Lambda2HyperExpression()
+        {
+            var lambda = Common.Evaluate(@"
+.foo
+   foo1:bar1
+lambda2hyper:x:-/*
+");
+            Assert.Equal("foo1:bar1\r\n", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
         public void String2LambdaToString_01()
         {
             var hl = @"foo

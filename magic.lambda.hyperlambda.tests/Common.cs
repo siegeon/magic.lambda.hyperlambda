@@ -8,8 +8,10 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using magic.node;
 using magic.signals.services;
 using magic.signals.contracts;
+using magic.node.extensions.hyperlambda;
 
 namespace magic.lambda.hyperlambda.tests
 {
@@ -19,6 +21,15 @@ namespace magic.lambda.hyperlambda.tests
         {
             var services = Initialize();
             return services.GetService(typeof(ISignaler)) as ISignaler;
+        }
+
+        static public Node Evaluate(string hl)
+        {
+            var services = Initialize();
+            var lambda = new Parser(hl).Lambda();
+            var signaler = services.GetService(typeof(ISignaler)) as ISignaler;
+            signaler.Signal("eval", lambda);
+            return lambda;
         }
 
         #region [ -- Private helper methods -- ]
