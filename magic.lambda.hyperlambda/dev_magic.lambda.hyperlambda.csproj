@@ -2,25 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>magic.lambda.hyperlambda</PackageId>
-    <Authors>Thomas Hansen</Authors>
-    <Company>Thomas Hansen</Company>
-    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
-    <Description>Hyperlambda parser and generator for Magic, allowing you to generate and parse Hyperlambda in your Magic application.</Description>
-    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.hyperlambda</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.hyperlambda/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
-    <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>2.0.1</PackageVersion>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/polterguy/magic.lambda.hyperlambda.git</RepositoryUrl>
-    <PackageTags>hyperlambda, dsl, dynamic, scripting</PackageTags>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin/Release/netstandard2.0/magic.lambda.hyperlambda.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
