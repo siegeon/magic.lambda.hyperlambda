@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using Xunit;
 using magic.node;
+using magic.node.expressions;
 using magic.node.extensions.hyperlambda;
 
 namespace magic.lambda.hyperlambda.tests
@@ -262,6 +263,83 @@ jo:dude
             Assert.Null(node.Value);
             signaler.Signal("lambda2hyper", node);
             Assert.Equal(hl, node.Value);
+        }
+
+        [Fact]
+        public void MultilineCommentTest()
+        {
+            var hl = @"
+/*
+ * This is a comment
+ */
+foo
+   bar:int:57
+      howdy:decimal:57
+   barx
+jo:dude
+".Replace("\r", "").Replace("\n", "\r\n");
+            var signaler = Common.GetSignaler();
+            var node = new Node("", hl);
+            signaler.Signal("hyper2lambda", node);
+            Assert.Null(node.Value);
+            Assert.Equal("foo", node.Children.First().Name);
+            Assert.Null(node.Children.First().Value);
+            Assert.Equal("bar", node.Children.First().Children.First().Name);
+            Assert.Equal(57, node.Children.First().Children.First().Value);
+            Assert.Equal("howdy", node.Children.First().Children.First().Children.First().Name);
+            Assert.Equal(57M, node.Children.First().Children.First().Children.First().Value);
+            Assert.Equal("barx", node.Children.First().Children.Skip(1).First().Name);
+            Assert.Equal("jo", node.Children.Skip(1).First().Name);
+            Assert.Equal("dude", node.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void SingleLineCommentTest()
+        {
+            var hl = @"
+foo
+   bar:int:57
+      howdy:decimal:57
+
+   // This is a single line comment
+   barx
+jo:dude
+".Replace("\r", "").Replace("\n", "\r\n");
+            var signaler = Common.GetSignaler();
+            var node = new Node("", hl);
+            signaler.Signal("hyper2lambda", node);
+            Assert.Null(node.Value);
+            Assert.Equal("foo", node.Children.First().Name);
+            Assert.Null(node.Children.First().Value);
+            Assert.Equal("bar", node.Children.First().Children.First().Name);
+            Assert.Equal(57, node.Children.First().Children.First().Value);
+            Assert.Equal("howdy", node.Children.First().Children.First().Children.First().Name);
+            Assert.Equal(57M, node.Children.First().Children.First().Children.First().Value);
+            Assert.Equal("barx", node.Children.First().Children.Skip(1).First().Name);
+            Assert.Equal("jo", node.Children.Skip(1).First().Name);
+            Assert.Equal("dude", node.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void TypeConversion()
+        {
+            var hl = @"
+.int:int:5
+.decimal:decimal:5
+.double:double:5
+.bool:bool:true
+.string:string:foo
+.x:x:foo
+";
+            var signaler = Common.GetSignaler();
+            var node = new Node("", hl);
+            signaler.Signal("hyper2lambda", node);
+            Assert.Equal(5, node.Children.First().Value);
+            Assert.Equal(5M, node.Children.Skip(1).First().Value);
+            Assert.Equal(5D, node.Children.Skip(2).First().Value);
+            Assert.Equal(true, node.Children.Skip(3).First().Value);
+            Assert.Equal("foo", node.Children.Skip(4).First().Value);
+            Assert.True(node.Children.Skip(5).First().Value is Expression);
         }
     }
 }
