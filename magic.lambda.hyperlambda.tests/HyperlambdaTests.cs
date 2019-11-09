@@ -1,10 +1,11 @@
 /*
- * Magic, Copyright(c) Thomas Hansen 2019, thomas@gaiasoul.com, all rights reserved.
+ * Magic, Copyright(c) Thomas Hansen 2019, thomas@servergardens.com, all rights reserved.
  * See the enclosed LICENSE file for details.
  */
 
 using System;
 using System.Linq;
+using System.Globalization;
 using Xunit;
 using magic.node;
 using magic.node.expressions;
@@ -340,6 +341,42 @@ jo:dude
             Assert.Equal(true, node.Children.Skip(3).First().Value);
             Assert.Equal("foo", node.Children.Skip(4).First().Value);
             Assert.True(node.Children.Skip(5).First().Value is Expression);
+        }
+
+        [Fact]
+        public void NodeWithDateValue_01()
+        {
+            var result = new Parser(@"
+foo:date:'2019-07-10T08:12:39.483Z'").Lambda().Children.ToList();
+            Assert.Single(result);
+            Assert.Equal("foo", result.First().Name);
+            Assert.Equal(
+                DateTime.Parse("2019-07-10T08:12:39.483Z", CultureInfo.InvariantCulture),
+                result.First().Value);
+        }
+
+        [Fact]
+        public void NodeWithDateValue_02()
+        {
+            var result = new Parser(@"
+foo:date:'2019-07-10T08:12:39'").Lambda().Children.ToList();
+            Assert.Single(result);
+            Assert.Equal("foo", result.First().Name);
+            Assert.Equal(
+                DateTime.Parse("2019-07-10T08:12:39", CultureInfo.InvariantCulture),
+                result.First().Value);
+        }
+
+        [Fact]
+        public void NodeWithDateValue_03()
+        {
+            var result = new Parser(@"
+foo:date:'2019-07-10T08:12:39+01:30'").Lambda().Children.ToList();
+            Assert.Single(result);
+            Assert.Equal("foo", result.First().Name);
+            Assert.Equal(
+                DateTime.Parse("2019-07-10T08:12:39+01:30", CultureInfo.InvariantCulture),
+                result.First().Value);
         }
     }
 }
