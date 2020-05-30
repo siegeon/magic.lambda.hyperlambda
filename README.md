@@ -6,8 +6,8 @@
 Hyperlambda parser and creator for [Magic](https://github.com/polterguy/magic). More specifically, this project provides you with two
 slots.
 
-* __[hyper]__ - Transforms a piece of Hyperlambda (text) to a lambda hierarchy.
-* __[lambda]__ - Transforms a lambda hierarchy to Hyperlambda (text).
+* __[hyper2lambda]__ - Transforms a piece of Hyperlambda (text) to a lambda hierarchy.
+* __[lambda2hyper]__ - Transforms a lambda hierarchy to Hyperlambda (text).
 
 Using these slots, you can both easily create, serialize, and parse Hyperlambda to lambda, and vice versa.
 
