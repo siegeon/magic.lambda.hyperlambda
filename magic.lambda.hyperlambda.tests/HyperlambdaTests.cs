@@ -158,7 +158,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void SpacingError_Throws()
         {
-            Assert.Throws<ApplicationException>(() => new Parser("foo1\r\n bar1"));
+            Assert.Throws<ArgumentException>(() => new Parser("foo1\r\n bar1"));
         }
 
         [Fact]

@@ -26,7 +26,7 @@ namespace magic.lambda.hyperlambda
         public void Signal(ISignaler signaler, Node input)
         {
             if (input.Value != null && input.Children.Any())
-                throw new ApplicationException("Provide either children or expression value to [hyper], not both");
+                throw new ArgumentException("Provide either children or expression value to [hyper], not both");
 
             if (input.Children.Any())
                 input.Value = Generator.GetHyper(input.Children);
