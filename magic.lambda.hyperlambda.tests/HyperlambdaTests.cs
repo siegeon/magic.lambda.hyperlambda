@@ -9,6 +9,7 @@ using System.Globalization;
 using Xunit;
 using magic.node;
 using magic.node.expressions;
+using magic.node.extensions;
 using magic.node.extensions.hyperlambda;
 
 namespace magic.lambda.hyperlambda.tests
@@ -364,7 +365,7 @@ foo:date:'2019-07-10T08:12:39'").Lambda().Children.ToList();
             Assert.Equal("foo", result.First().Name);
             Assert.Equal(
                 DateTime.Parse("2019-07-10T08:12:39", CultureInfo.InvariantCulture),
-                result.First().Value);
+                result.First().Get<DateTime>().ToUniversalTime());
         }
 
         [Fact]
