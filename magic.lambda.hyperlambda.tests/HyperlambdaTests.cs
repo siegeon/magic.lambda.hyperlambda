@@ -173,6 +173,15 @@ namespace magic.lambda.hyperlambda.tests
         }
 
         [Fact]
+        public void Lambda2HyperThrows()
+        {
+            var signaler = Common.GetSignaler();
+            var node = new Node("", new Expression("@.x/*"));
+            node.Add(new Node("throws"));
+            Assert.Throws<ArgumentException>(() => signaler.Signal("lambda2hyper", node));
+        }
+
+        [Fact]
         public void Lambda2String()
         {
             var signaler = Common.GetSignaler();
