@@ -354,18 +354,6 @@ jo:dude
         }
 
         [Fact]
-        public void NodeWithDateValue_01()
-        {
-            var result = new Parser(@"
-foo:date:'2019-07-10T08:12:39.483Z'").Lambda().Children.ToList();
-            Assert.Single(result);
-            Assert.Equal("foo", result.First().Name);
-            Assert.Equal(
-                DateTime.Parse("2019-07-10T08:12:39.483Z", CultureInfo.InvariantCulture),
-                result.First().Value);
-        }
-
-        [Fact]
         public void NodeWithDateValue_02()
         {
             var result = new Parser(@"
@@ -375,18 +363,6 @@ foo:date:'2019-07-10T08:12:39'").Lambda().Children.ToList();
             Assert.Equal(
                 DateTime.Parse("2019-07-10T08:12:39", CultureInfo.InvariantCulture),
                 result.First().Get<DateTime>().ToUniversalTime());
-        }
-
-        [Fact]
-        public void NodeWithDateValue_03()
-        {
-            var result = new Parser(@"
-foo:date:'2019-07-10T08:12:39+01:30'").Lambda().Children.ToList();
-            Assert.Single(result);
-            Assert.Equal("foo", result.First().Name);
-            Assert.Equal(
-                DateTime.Parse("2019-07-10T08:12:39+01:30", CultureInfo.InvariantCulture),
-                result.First().Value);
         }
     }
 }
