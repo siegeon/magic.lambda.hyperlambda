@@ -9,6 +9,7 @@ using System.Globalization;
 using Xunit;
 using magic.node;
 using magic.node.extensions;
+using magic.node.expressions;
 using magic.node.extensions.hyperlambda;
 
 namespace magic.lambda.hyperlambda.tests
