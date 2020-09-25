@@ -10,7 +10,7 @@
     <Description>Hyperlambda parser and generator for Magic, allowing you to generate and parse Hyperlambda in your Magic application.</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.hyperlambda</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>8.2.0</PackageVersion>
+    <PackageVersion>8.2.1</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.hyperlambda.git</RepositoryUrl>
