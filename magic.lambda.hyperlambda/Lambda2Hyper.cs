@@ -25,13 +25,25 @@ namespace magic.lambda.hyperlambda
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            if (input.Value != null && input.Children.Any())
-                throw new ArgumentException("Provide either children or expression value to [hyper], not both");
+            // Sanity checking invocation.
+            if (input.Value == null && !input.Children.Any())
+                throw new ArgumentException("Provide either children nodes or expression value to [lambda2hyper]");
 
-            if (input.Children.Any())
-                input.Value = Generator.GetHyper(input.Children);
+            // Checking type of invocation, and acting accordingly.
+            if (input.Value is Expression)
+            {
+                input.Value = Generator
+                    .GetHyper(
+                        input.Evaluate(),
+                        input
+                            .Children
+                            .FirstOrDefault(x => x.Name == "comments")?
+                            .GetEx<bool>() ?? false);
+            }
             else
-                input.Value = Generator.GetHyper(input.Evaluate());
+            {
+                input.Value = Generator.GetHyper(input.Children);
+            }
         }
     }
 }

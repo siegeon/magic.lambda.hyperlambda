@@ -24,7 +24,9 @@ namespace magic.lambda.hyperlambda
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            var parser = new Parser(input.GetEx<string>());
+            var comments = input.Children.FirstOrDefault(x => x.Name == "comments");
+            var parser = new Parser(input.GetEx<string>(), comments?.GetEx<bool>() ?? false);
+            comments?.UnTie();
             input.AddRange(parser.Lambda().Children.ToList());
             input.Value = null;
         }
