@@ -25,9 +25,9 @@ namespace magic.lambda.hyperlambda
         public void Signal(ISignaler signaler, Node input)
         {
             var comments = input.Children.FirstOrDefault(x => x.Name == "comments");
-            var parser = new Parser(input.GetEx<string>(), comments?.GetEx<bool>() ?? false);
+            var parser = HyperlambdaParser.Parse(input.GetEx<string>(), comments?.GetEx<bool>() ?? false);
             comments?.UnTie();
-            input.AddRange(parser.Lambda().Children.ToList());
+            input.AddRange(parser.Children.ToList());
             input.Value = null;
         }
     }

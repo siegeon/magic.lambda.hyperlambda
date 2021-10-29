@@ -32,8 +32,8 @@ namespace magic.lambda.hyperlambda
             // Checking type of invocation, and acting accordingly.
             if (input.Value is Expression)
             {
-                input.Value = Generator
-                    .GetHyper(
+                input.Value = HyperlambdaGenerator
+                    .GetHyperlambda(
                         input.Evaluate(),
                         input
                             .Children
@@ -42,7 +42,7 @@ namespace magic.lambda.hyperlambda
             }
             else
             {
-                input.Value = Generator.GetHyper(input.Children);
+                input.Value = HyperlambdaGenerator.GetHyperlambda(input.Children);
             }
         }
     }
