@@ -18,14 +18,14 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void Empty()
         {
-            var result = new Parser("").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("").Children.ToList();
             Assert.Empty(result);
         }
 
         [Fact]
         public void SingleNode()
         {
-            var result = new Parser("foo").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Null(result.First().Value);
@@ -35,7 +35,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void NodeWithEmptyValue()
         {
-            var result = new Parser("foo:").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo:").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Equal("", result.First().Value);
@@ -45,7 +45,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void NodeWithValue()
         {
-            var result = new Parser("foo:bar").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo:bar").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Equal("bar", result.First().Value);
@@ -55,7 +55,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void NodeWithColonValue()
         {
-            var result = new Parser(@"foo:"":""").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse(@"foo:"":""").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Equal(":", result.First().Value);
@@ -65,7 +65,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void NodeWithTypedValue()
         {
-            var result = new Parser("foo:int:5").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo:int:5").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Equal(5, result.First().Value);
@@ -75,7 +75,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void TwoRootNodes()
         {
-            var result = new Parser("foo1:bar1\r\nfoo2:bar2").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo1:bar1\r\nfoo2:bar2").Children.ToList();
             Assert.Equal(2, result.Count());
             Assert.Equal("foo1", result.First().Name);
             Assert.Equal("bar1", result.First().Value);
@@ -88,7 +88,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void NodeWithChildren()
         {
-            var result = new Parser("foo\r\n   bar").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo\r\n   bar").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Null(result.First().Value);
@@ -100,7 +100,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void TwoRootNodesWithChildren()
         {
-            var result = new Parser("foo1\r\n   bar\r\nfoo2").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo1\r\n   bar\r\nfoo2").Children.ToList();
             Assert.Equal(2, result.Count);
             Assert.Equal("foo1", result.First().Name);
             Assert.Null(result.First().Value);
@@ -115,7 +115,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void ComplexHierarchy()
         {
-            var result = new Parser("foo1\r\n   bar1\r\n      bar2\r\n   bar3").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo1\r\n   bar1\r\n      bar2\r\n   bar3").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo1", result.First().Name);
             Assert.Null(result.First().Value);
@@ -130,7 +130,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void DoubleQuotedString()
         {
-            var result = new Parser(@"foo1:"" howdy world """).Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse(@"foo1:"" howdy world """).Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo1", result.First().Name);
             Assert.Equal(" howdy world ", result.First().Value);
@@ -139,7 +139,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void SingleQuotedString()
         {
-            var result = new Parser("foo1:' howdy world '").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo1:' howdy world '").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo1", result.First().Name);
             Assert.Equal(" howdy world ", result.First().Value);
@@ -148,7 +148,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void MultilineString()
         {
-            var result = new Parser("foo1:@\" howdy\r\nworld \"").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse("foo1:@\" howdy\r\nworld \"").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo1", result.First().Name);
             Assert.Equal(" howdy\r\nworld ", result.First().Value);
@@ -157,7 +157,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void SpacingError_Throws()
         {
-            Assert.Throws<ArgumentException>(() => new Parser("foo1\r\n bar1"));
+            Assert.Throws<ArgumentException>(() => HyperlambdaParser.Parse("foo1\r\n bar1"));
         }
 
         [Fact]
@@ -169,15 +169,6 @@ namespace magic.lambda.hyperlambda.tests
             Assert.Equal("foo", node.Children.First().Name);
             Assert.Equal("bar", node.Children.First().Children.First().Name);
             Assert.Null(node.Value);
-        }
-
-        [Fact]
-        public void Lambda2HyperThrows()
-        {
-            var signaler = Common.GetSignaler();
-            var node = new Node("", new Expression("@.x/*"));
-            node.Add(new Node("throws"));
-            Assert.Throws<ArgumentException>(() => signaler.Signal("lambda2hyper", node));
         }
 
         [Fact]
@@ -355,8 +346,8 @@ jo:dude
         [Fact]
         public void NodeWithDateValue_02()
         {
-            var result = new Parser(@"
-foo:date:'2019-07-10T08:12:39'").Lambda().Children.ToList();
+            var result = HyperlambdaParser.Parse(@"
+foo:date:'2019-07-10T08:12:39'").Children.ToList();
             Assert.Single(result);
             Assert.Equal("foo", result.First().Name);
             Assert.Equal(
