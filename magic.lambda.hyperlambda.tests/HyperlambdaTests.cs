@@ -156,7 +156,7 @@ namespace magic.lambda.hyperlambda.tests
         [Fact]
         public void SpacingError_Throws()
         {
-            Assert.Throws<ArgumentException>(() => HyperlambdaParser.Parse("foo1\r\n bar1"));
+            Assert.Throws<HyperlambdaException>(() => HyperlambdaParser.Parse("foo1\r\n bar1"));
         }
 
         [Fact]

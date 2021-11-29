@@ -2,7 +2,6 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using System;
 using System.Linq;
 using magic.node;
 using magic.node.extensions;
@@ -26,7 +25,7 @@ namespace magic.lambda.hyperlambda
         {
             // Sanity checking invocation.
             if (input.Value == null && !input.Children.Any())
-                throw new ArgumentException("Provide either children nodes or expression value to [lambda2hyper]");
+                throw new HyperlambdaException("Provide either children nodes or expression value to [lambda2hyper]");
 
             // Checking type of invocation, and acting accordingly.
             if (input.Value is Expression)
