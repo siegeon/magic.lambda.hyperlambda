@@ -193,6 +193,38 @@ lambda2hyper:x:-/*
         }
 
         [Fact]
+        public void Lambda2HyperExpressionWithComments()
+        {
+            var lambda = Common.Evaluate(@"
+.foo
+   foo1:bar1
+   ..:howdy world
+lambda2hyper:x:-/*
+   comments:true
+");
+            Assert.Equal("foo1:bar1\r\n\r\n// howdy world\r\n", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void Lambda2HyperExpressionWithMultilineComments()
+        {
+            var lambda = Common.Evaluate(@"
+.foo
+   foo1:bar1
+   ..:""howdy world\r\nhowdy world 2""
+lambda2hyper:x:-/*
+   comments:true
+");
+            Assert.Equal("foo1:bar1\r\n\r\n/*\r\n * howdy world\r\n * howdy world 2\r\n */\r\n", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void Lambda2HyperThrows()
+        {
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"lambda2hyper"));
+        }
+
+        [Fact]
         public void String2LambdaToString_01()
         {
             var hl = @"foo
@@ -254,6 +286,23 @@ jo:dude
 ""
       howdy:@""
 XXX""
+   barx
+jo:dude
+".Replace("\r", "").Replace("\n", "\r\n");
+            var signaler = Common.GetSignaler();
+            var node = new Node("", hl);
+            signaler.Signal("hyper2lambda", node);
+            Assert.Null(node.Value);
+            signaler.Signal("lambda2hyper", node);
+            Assert.Equal(hl, node.Value);
+        }
+
+        [Fact]
+        public void String2LambdaToString_04_WithComments()
+        {
+            var hl = @"foo
+   bar:int:57
+      howdy:decimal:57
    barx
 jo:dude
 ".Replace("\r", "").Replace("\n", "\r\n");
